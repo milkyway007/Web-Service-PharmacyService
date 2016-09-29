@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
+  <services>
+    <service name="PharmacyService">
+      <implementation-class>pharmacyPackage.PharmacyService</implementation-class>
+      <wsdl-url>file:/C:/Users/User/Documents/TTU/IV/veebiteenused/projekt/medicines.wsdl</wsdl-url>
+      <local-wsdl-file>medicines.wsdl</local-wsdl-file>
+      <service-name>PharmacyService</service-name>
+      <port-name>PharmacyPort</port-name>
+      <package-name>ee.ttu.idu0075._2015.ws.invoice</package-name>
+      <catalog-file>catalog.xml</catalog-file>
+      <use-provider>true</use-provider>
+      <wsimport-options>
+        <wsimport-option>
+          <wsimport-option-name>extension</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>verbose</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>fork</wsimport-option-name>
+          <wsimport-option-value>false</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xnocompile</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xendorsed</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+      </wsimport-options>
+    </service>
+  </services>
+  <clients/>
+  <jsr109>true</jsr109>
+</jax-ws>

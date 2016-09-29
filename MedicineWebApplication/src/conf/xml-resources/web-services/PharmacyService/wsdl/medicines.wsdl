@@ -1,0 +1,342 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.ttu.ee/idu0075/2015/ws/invoice" targetNamespace="http://www.ttu.ee/idu0075/2015/ws/invoice">
+	<wsdl:types>
+		<xs:schema targetNamespace="http://www.ttu.ee/idu0075/2015/ws/invoice" elementFormDefault="qualified">
+			  <xs:simpleType name="decimalType"> 
+				<xs:restriction base="xs:decimal"> 
+				  <xs:minInclusive value="0"/> 
+				  <xs:fractionDigits value="2"/> 
+				</xs:restriction> 
+			  </xs:simpleType> 
+			  <xs:simpleType name="unitType"> 
+				<xs:restriction base="xs:string"> 
+				  <xs:enumeration value="mg"/>
+				  <xs:enumeration value="l"/>
+				  <xs:enumeration value="tbl"/> 
+				  <xs:enumeration value="caps"/> 
+				</xs:restriction> 
+			  </xs:simpleType> 
+			<xs:complexType name="sizeType">
+				<xs:sequence>
+					<xs:element name="amount" type="tns:decimalType"/>
+					<xs:element name="unit" type="tns:unitType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="activeIngridientType">
+				<xs:sequence>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="amount" type="tns:decimalType"/>
+					<xs:element name="unit" type="tns:unitType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="activeIngridientListType">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="unbounded" name="activeIngridient" type="tns:activeIngridientType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="medicineType">
+				<xs:sequence>
+					<xs:element name="id" type="xs:integer"/>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="activeIngridientList" type="tns:activeIngridientListType"/>
+					<xs:element name="size" type="tns:sizeType"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="usage" type="xs:string"/>
+                                        <xs:element minOccurs="0" maxOccurs="1" name="errorr" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="getMedicineRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="id" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getMedicineResponse" type="tns:medicineType"/>
+			<xs:element name="addMedicineRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="name" type="xs:string"/>
+						<xs:element name="activeIngridientList" type="tns:activeIngridientListType"/>
+						<xs:element name="size" type="tns:sizeType"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="usage" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="addMedicineResponse" type="tns:medicineType"/>
+			<xs:element name="getMedicineListRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getMedicineListResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="unbounded" name="medicine" type="tns:medicineType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:complexType name="personType">
+				<xs:sequence>
+					<xs:element name="firstName" type="xs:string"/>
+					<xs:element name="lastName" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="addressType">
+				<xs:sequence>
+					<xs:element name="city" type="xs:string"/>
+					<xs:element name="street" type="xs:string"/>
+					<xs:element name="house" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="classType"> 
+				<xs:restriction base="xs:string"> 
+				  <xs:enumeration value="A"/>
+				  <xs:enumeration value="B"/>
+				  <xs:enumeration value="C"/> 
+				  <xs:enumeration value="D"/> 
+				</xs:restriction> 
+			  </xs:simpleType> 
+			<xs:complexType name="pharmacyType">
+				<xs:sequence>
+					<xs:element name="id" type="xs:integer"/>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="address" type="tns:addressType"/>
+					<xs:element name="manager" type="tns:personType"/>
+					<xs:element minOccurs="0" name="class" type="tns:classType"/>
+                                        <xs:element name="moneyAmount" type="tns:decimalType"/>
+                                        <xs:element name="pharmacyMedicineList" type="tns:pharmacyMedicineListType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="getPharmacyRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="id" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getPharmacyResponse" type="tns:pharmacyType"/>
+			<xs:element name="addPharmacyRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="name" type="xs:string"/>
+						<xs:element name="address" type="tns:addressType"/>
+						<xs:element name="manager" type="tns:personType"/>
+                                                <xs:element minOccurs="0" name="class" type="tns:classType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="addPharmacyResponse" type="tns:pharmacyType"/>
+			<xs:element name="getPharmacyListRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="city" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="managerLastName" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="class" type="tns:classType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getPharmacyListResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="unbounded" name="pharmacy" type="tns:pharmacyType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:complexType name="pharmacyMedicineType">
+				<xs:sequence>
+                                        <xs:element name="id" type="xs:integer"/>
+					<xs:element name="medicine" type="tns:medicineType"/>
+					<xs:element name="quantity" type="tns:decimalType"/>
+					<xs:element name="unitPrice" type="tns:decimalType"/>
+                                        <xs:element minOccurs="0" maxOccurs="1" name="error" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="pharmacyMedicineListType">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="pharmacyMedicine" type="tns:pharmacyMedicineType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="getPharmacyMedicineListRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="pharmacyId" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getPharmacyMedicineListResponse" type="tns:pharmacyMedicineListType"/>
+			<xs:element name="addPharmacyMedicineRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="pharmacyId" type="xs:integer"/>
+						<xs:element name="medicineId" type="xs:integer"/>
+						<xs:element name="quantity" type="tns:decimalType"/>
+						<xs:element name="unitPrice" type="tns:decimalType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="addPharmacyMedicineResponse" type="tns:pharmacyMedicineType"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getMedicineMessageRequest">
+		<wsdl:part name="parameter" element="tns:getMedicineRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getMedicineMessageResponse">
+		<wsdl:part name="parameter" element="tns:getMedicineResponse"/>
+	</wsdl:message>
+	<wsdl:message name="addMedicineMessageRequest">
+		<wsdl:part name="parameter" element="tns:addMedicineRequest"/>
+	</wsdl:message>
+	<wsdl:message name="addMedicineMessageResponse">
+		<wsdl:part name="parameter" element="tns:addMedicineResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getMedicineListMessageRequest">
+		<wsdl:part name="parameter" element="tns:getMedicineListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getMedicineListMessageResponse">
+		<wsdl:part name="parameter" element="tns:getMedicineListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getPharmacyMessageRequest">
+		<wsdl:part name="parameter" element="tns:getPharmacyRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getPharmacyMessageResponse">
+		<wsdl:part name="parameter" element="tns:getPharmacyResponse"/>
+	</wsdl:message>
+	<wsdl:message name="addPharmacyMessageRequest">
+		<wsdl:part name="parameter" element="tns:addPharmacyRequest"/>
+	</wsdl:message>
+	<wsdl:message name="addPharmacyMessageResponse">
+		<wsdl:part name="parameter" element="tns:addPharmacyResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getPharmacyListMessageRequest">
+		<wsdl:part name="parameter" element="tns:getPharmacyListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getPharmacyListMessageResponse">
+		<wsdl:part name="parameter" element="tns:getPharmacyListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getPharmacyMedicineListMessageRequest">
+		<wsdl:part name="parameter" element="tns:getPharmacyMedicineListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getPharmacyMedicineListMessageResponse">
+		<wsdl:part name="parameter" element="tns:getPharmacyMedicineListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="addPharmacyMedicineMessageRequest">
+		<wsdl:part name="parameter" element="tns:addPharmacyMedicineRequest"/>
+	</wsdl:message>
+	<wsdl:message name="addPharmacyMedicineMessageResponse">
+		<wsdl:part name="parameter" element="tns:addPharmacyMedicineResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="PharmacyPortType">
+		<wsdl:operation name="getMedicine">
+			<wsdl:input message="tns:getMedicineMessageRequest"/>
+			<wsdl:output message="tns:getMedicineMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addMedicine">
+			<wsdl:input message="tns:addMedicineMessageRequest"/>
+			<wsdl:output message="tns:addMedicineMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getMedicineList">
+			<wsdl:input message="tns:getMedicineListMessageRequest"/>
+			<wsdl:output message="tns:getMedicineListMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getPharmacy">
+			<wsdl:input message="tns:getPharmacyMessageRequest"/>
+			<wsdl:output message="tns:getPharmacyMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addPharmacy">
+			<wsdl:input message="tns:addPharmacyMessageRequest"/>
+			<wsdl:output message="tns:addPharmacyMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getPharmacyList">
+			<wsdl:input message="tns:getPharmacyListMessageRequest"/>
+			<wsdl:output message="tns:getPharmacyListMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getPharmacyMedicineList">
+			<wsdl:input message="tns:getPharmacyMedicineListMessageRequest"/>
+			<wsdl:output message="tns:getPharmacyMedicineListMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addPharmacyMedicine">
+			<wsdl:input message="tns:addPharmacyMedicineMessageRequest"/>
+			<wsdl:output message="tns:addPharmacyMedicineMessageResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="PharmacyBinding" type="tns:PharmacyPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getMedicine">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addMedicine">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getMedicineList">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>	
+		<wsdl:operation name="getPharmacy">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addPharmacy">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPharmacyList">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>	
+		<wsdl:operation name="getPharmacyMedicineList">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addPharmacyMedicine">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="PharmacyService">
+		<wsdl:port name="PharmacyPort" binding="tns:PharmacyBinding">
+			<soap:address location="http://lenovo-pc:8080/PharmacyWebApp/PharmacyService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

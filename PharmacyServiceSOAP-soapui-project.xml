@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="9223c689-ce69-4da4-a1f3-fd476892d016" activeEnvironment="Default" name="PharmacyServiceSOAP" resourceRoot="" soapui-version="5.2.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="400ef2cf-2854-47b9-8722-94d24f8bfbe0" wsaVersion="NONE" name="PharmacyBinding" type="wsdl" bindingName="{http://www.ttu.ee/idu0075/2015/ws/invoice}PharmacyBinding" soapVersion="1_1" anonymous="optional" definition="http://lenovo-pc:8080/MedicineWebApplication/PharmacyService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://lenovo-pc:8080/MedicineWebApplication/PharmacyService?wsdl"><con:part><con:url>http://lenovo-pc:8080/MedicineWebApplication/PharmacyService?wsdl</con:url><con:content><![CDATA[<!--Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown.-->
+<!--Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown.-->
+<wsdl:definitions targetNamespace="http://www.ttu.ee/idu0075/2015/ws/invoice" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.ttu.ee/idu0075/2015/ws/invoice">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://www.ttu.ee/idu0075/2015/ws/invoice" elementFormDefault="qualified">
+      <xs:simpleType name="decimalType">
+        <xs:restriction base="xs:decimal">
+          <xs:minInclusive value="0"/>
+          <xs:fractionDigits value="2"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="unitType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="mg"/>
+          <xs:enumeration value="l"/>
+          <xs:enumeration value="tbl"/>
+          <xs:enumeration value="caps"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="sizeType">
+        <xs:sequence>
+          <xs:element name="amount" type="tns:decimalType"/>
+          <xs:element name="unit" type="tns:unitType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="activeIngridientType">
+        <xs:sequence>
+          <xs:element name="name" type="xs:string"/>
+          <xs:element name="amount" type="tns:decimalType"/>
+          <xs:element name="unit" type="tns:unitType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="activeIngridientListType">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="unbounded" name="activeIngridient" type="tns:activeIngridientType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="medicineType">
+        <xs:sequence>
+          <xs:element name="id" type="xs:integer"/>
+          <xs:element name="name" type="xs:string"/>
+          <xs:element name="activeIngridientList" type="tns:activeIngridientListType"/>
+          <xs:element name="size" type="tns:sizeType"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="usage" type="xs:string"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="errorr" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="getMedicineRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="id" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getMedicineResponse" type="tns:medicineType"/>
+      <xs:element name="addMedicineRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="activeIngridientList" type="tns:activeIngridientListType"/>
+            <xs:element name="size" type="tns:sizeType"/>
+            <xs:element minOccurs="0" maxOccurs="1" name="usage" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addMedicineResponse" type="tns:medicineType"/>
+      <xs:element name="getMedicineListRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getMedicineListResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="medicine" type="tns:medicineType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="personType">
+        <xs:sequence>
+          <xs:element name="firstName" type="xs:string"/>
+          <xs:element name="lastName" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addressType">
+        <xs:sequence>
+          <xs:element name="city" type="xs:string"/>
+          <xs:element name="street" type="xs:string"/>
+          <xs:element name="house" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="classType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="A"/>
+          <xs:enumeration value="B"/>
+          <xs:enumeration value="C"/>
+          <xs:enumeration value="D"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="pharmacyType">
+        <xs:sequence>
+          <xs:element name="id" type="xs:integer"/>
+          <xs:element name="name" type="xs:string"/>
+          <xs:element name="address" type="tns:addressType"/>
+          <xs:element name="manager" type="tns:personType"/>
+          <xs:element minOccurs="0" name="class" type="tns:classType"/>
+          <xs:element name="moneyAmount" type="tns:decimalType"/>
+          <xs:element name="pharmacyMedicineList" type="tns:pharmacyMedicineListType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="getPharmacyRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="id" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getPharmacyResponse" type="tns:pharmacyType"/>
+      <xs:element name="addPharmacyRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="address" type="tns:addressType"/>
+            <xs:element name="manager" type="tns:personType"/>
+            <xs:element minOccurs="0" name="class" type="tns:classType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addPharmacyResponse" type="tns:pharmacyType"/>
+      <xs:element name="getPharmacyListRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element minOccurs="0" maxOccurs="1" name="city" type="xs:string"/>
+            <xs:element minOccurs="0" maxOccurs="1" name="managerLastName" type="xs:string"/>
+            <xs:element minOccurs="0" maxOccurs="1" name="class" type="tns:classType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getPharmacyListResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="pharmacy" type="tns:pharmacyType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="pharmacyMedicineType">
+        <xs:sequence>
+          <xs:element name="id" type="xs:integer"/>
+          <xs:element name="medicine" type="tns:medicineType"/>
+          <xs:element name="quantity" type="tns:decimalType"/>
+          <xs:element name="unitPrice" type="tns:decimalType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="pharmacyMedicineListType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="pharmacyMedicine" type="tns:pharmacyMedicineType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="getPharmacyMedicineListRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="pharmacyId" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getPharmacyMedicineListResponse" type="tns:pharmacyMedicineListType"/>
+      <xs:element name="addPharmacyMedicineRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="pharmacyId" type="xs:integer"/>
+            <xs:element name="medicineId" type="xs:integer"/>
+            <xs:element name="quantity" type="tns:decimalType"/>
+            <xs:element name="unitPrice" type="tns:decimalType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addPharmacyMedicineResponse" type="tns:pharmacyMedicineType"/>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getMedicineMessageRequest">
+    <wsdl:part name="parameter" element="tns:getMedicineRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getMedicineMessageResponse">
+    <wsdl:part name="parameter" element="tns:getMedicineResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addMedicineMessageRequest">
+    <wsdl:part name="parameter" element="tns:addMedicineRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addMedicineMessageResponse">
+    <wsdl:part name="parameter" element="tns:addMedicineResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getMedicineListMessageRequest">
+    <wsdl:part name="parameter" element="tns:getMedicineListRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getMedicineListMessageResponse">
+    <wsdl:part name="parameter" element="tns:getMedicineListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getPharmacyMessageRequest">
+    <wsdl:part name="parameter" element="tns:getPharmacyRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getPharmacyMessageResponse">
+    <wsdl:part name="parameter" element="tns:getPharmacyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addPharmacyMessageRequest">
+    <wsdl:part name="parameter" element="tns:addPharmacyRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addPharmacyMessageResponse">
+    <wsdl:part name="parameter" element="tns:addPharmacyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getPharmacyListMessageRequest">
+    <wsdl:part name="parameter" element="tns:getPharmacyListRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getPharmacyListMessageResponse">
+    <wsdl:part name="parameter" element="tns:getPharmacyListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getPharmacyMedicineListMessageRequest">
+    <wsdl:part name="parameter" element="tns:getPharmacyMedicineListRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getPharmacyMedicineListMessageResponse">
+    <wsdl:part name="parameter" element="tns:getPharmacyMedicineListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addPharmacyMedicineMessageRequest">
+    <wsdl:part name="parameter" element="tns:addPharmacyMedicineRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addPharmacyMedicineMessageResponse">
+    <wsdl:part name="parameter" element="tns:addPharmacyMedicineResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="PharmacyPortType">
+    <wsdl:operation name="getMedicine">
+      <wsdl:input message="tns:getMedicineMessageRequest"/>
+      <wsdl:output message="tns:getMedicineMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addMedicine">
+      <wsdl:input message="tns:addMedicineMessageRequest"/>
+      <wsdl:output message="tns:addMedicineMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getMedicineList">
+      <wsdl:input message="tns:getMedicineListMessageRequest"/>
+      <wsdl:output message="tns:getMedicineListMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPharmacy">
+      <wsdl:input message="tns:getPharmacyMessageRequest"/>
+      <wsdl:output message="tns:getPharmacyMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addPharmacy">
+      <wsdl:input message="tns:addPharmacyMessageRequest"/>
+      <wsdl:output message="tns:addPharmacyMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPharmacyList">
+      <wsdl:input message="tns:getPharmacyListMessageRequest"/>
+      <wsdl:output message="tns:getPharmacyListMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPharmacyMedicineList">
+      <wsdl:input message="tns:getPharmacyMedicineListMessageRequest"/>
+      <wsdl:output message="tns:getPharmacyMedicineListMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addPharmacyMedicine">
+      <wsdl:input message="tns:addPharmacyMedicineMessageRequest"/>
+      <wsdl:output message="tns:addPharmacyMedicineMessageResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PharmacyBinding" type="tns:PharmacyPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getMedicine">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addMedicine">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMedicineList">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPharmacy">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addPharmacy">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPharmacyList">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPharmacyMedicineList">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addPharmacyMedicine">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PharmacyService">
+    <wsdl:port name="PharmacyPort" binding="tns:PharmacyBinding">
+      <soap:address location="http://lenovo-pc:8080/MedicineWebApplication/PharmacyService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://lenovo-pc:8080/MedicineWebApplication/PharmacyService</con:endpoint></con:endpoints><con:operation id="6545dff6-2493-4cc6-a9d6-e7de97ee5612" isOneWay="false" action="" name="addMedicine" bindingOperationName="addMedicine" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="950da84a-d389-444b-be6d-f076abc6a7fc" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://lenovo-pc:8080/MedicineWebApplication/PharmacyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://www.ttu.ee/idu0075/2015/ws/invoice">\r
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:addMedicineRequest>
+      <inv:token>salajane</inv:token>
+         <inv:name>Betaloc Zok</inv:name>
+         <inv:activeIngridientList>
+            <inv:activeIngridient>
+               <inv:name>metoprolole</inv:name>
+               <inv:amount>-23.5</inv:amount>
+               <inv:unit>mg</inv:unit>
+            </inv:activeIngridient>
+         </inv:activeIngridientList>
+         <inv:size>
+            <inv:amount>30</inv:amount>
+            <inv:unit>tbl</inv:unit>
+         </inv:size>
+         <inv:usage>hypertension</inv:usage>
+      </inv:addMedicineRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/invoice/PharmacyPortType/addMedicineRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="f9b66f59-394b-4aeb-8e37-ce3a951fee1e" isOneWay="false" action="" name="addPharmacy" bindingOperationName="addPharmacy" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="48a87269-5a42-4690-97a9-82d7f33062ed" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://lenovo-pc:8080/MedicineWebApplication/PharmacyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://www.ttu.ee/idu0075/2015/ws/invoice">\r
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:addPharmacyRequest>
+         <inv:token>salajane</inv:token>
+         <inv:name>Tonismagi</inv:name>
+         <inv:address>
+            <inv:city>Tallinn</inv:city>
+            <inv:street>Tonismagi</inv:street>
+            <inv:house>5</inv:house>
+         </inv:address>
+         <inv:manager>
+            <inv:firstName>Mart</inv:firstName>
+            <inv:lastName>Mets</inv:lastName>
+         </inv:manager>
+         <inv:class>A</inv:class>
+      </inv:addPharmacyRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/invoice/PharmacyPortType/addPharmacyRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="cbea5d1b-4341-4427-8b7a-324931869da0" isOneWay="false" action="" name="addPharmacyMedicine" bindingOperationName="addPharmacyMedicine" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="ec648dae-dc5a-47e6-aaca-66d9d1972316" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://lenovo-pc:8080/MedicineWebApplication/PharmacyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://www.ttu.ee/idu0075/2015/ws/invoice">\r
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:addPharmacyMedicineRequest>
+         <inv:token>salajane</inv:token>
+         <inv:pharmacyId>1</inv:pharmacyId>
+         <inv:medicineId>1</inv:medicineId>
+         <inv:quantity>30</inv:quantity>
+         <inv:unitPrice>10</inv:unitPrice>
+      </inv:addPharmacyMedicineRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/invoice/PharmacyPortType/addPharmacyMedicineRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="d4676251-673c-415c-9a3f-d70ba4c1414e" isOneWay="false" action="" name="getMedicine" bindingOperationName="getMedicine" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="14b19696-e5e1-47aa-8281-e5625fe2713c" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://lenovo-pc:8080/MedicineWebApplication/PharmacyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://www.ttu.ee/idu0075/2015/ws/invoice">\r
+  <soapenv:Header/>
+   <soapenv:Body>
+      <inv:getMedicineRequest>
+         <inv:token>salajane</inv:token>
+         <inv:id>1</inv:id>
+      </inv:getMedicineRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/invoice/PharmacyPortType/getMedicineRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="3e251bc9-ce32-4866-8ee9-ab9266cffadc" isOneWay="false" action="" name="getMedicineList" bindingOperationName="getMedicineList" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="08756d7b-852c-44ac-80c1-e2e9f0d283d8" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://lenovo-pc:8080/MedicineWebApplication/PharmacyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://www.ttu.ee/idu0075/2015/ws/invoice">\r
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:getMedicineListRequest>
+         <inv:token>salajane</inv:token>
+      </inv:getMedicineListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/invoice/PharmacyPortType/getMedicineListRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="7079181d-7f74-41bd-bb07-b0685f8038b6" isOneWay="false" action="" name="getPharmacy" bindingOperationName="getPharmacy" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d931fa0d-fca9-4c29-ac98-fd74a8580cdc" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://lenovo-pc:8080/MedicineWebApplication/PharmacyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://www.ttu.ee/idu0075/2015/ws/invoice">\r
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:getPharmacyRequest>
+         <inv:token>salajane</inv:token>
+         <inv:id>1</inv:id>
+      </inv:getPharmacyRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/invoice/PharmacyPortType/getPharmacyRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="da63b7fb-4084-4535-8fbb-eedc03f8559f" isOneWay="false" action="" name="getPharmacyList" bindingOperationName="getPharmacyList" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="aa060062-7233-4717-aa68-75ef827b4441" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://lenovo-pc:8080/MedicineWebApplication/PharmacyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://www.ttu.ee/idu0075/2015/ws/invoice">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <inv:getPharmacyListRequest>\r
+         <inv:token>salajane</inv:token>\r
+        <!--Optional:-->
+         <inv:city>Tartu</inv:city>
+                  <!--Optional:-->
+         <inv:managerLastName>Mets</inv:managerLastName>
+         <!--Optional:-->
+         <inv:class>A</inv:class>
+      </inv:getPharmacyListRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/invoice/PharmacyPortType/getPharmacyListRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="702d83d5-3024-49e4-b356-5c4e74a18bdc" isOneWay="false" action="" name="getPharmacyMedicineList" bindingOperationName="getPharmacyMedicineList" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="bdb51fdf-848d-4e4e-a879-451b6875afa3" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://lenovo-pc:8080/MedicineWebApplication/PharmacyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://www.ttu.ee/idu0075/2015/ws/invoice">\r
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:getPharmacyMedicineListRequest>
+         <inv:token>salajane</inv:token>
+         <inv:pharmacyId>1</inv:pharmacyId>
+      </inv:getPharmacyMedicineListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/invoice/PharmacyPortType/getPharmacyMedicineListRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="087958a6-d59a-46ee-b3bc-f254b9ac2558" name="PharmacyServiceSOAP_TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="7e8ea1d1-b9d5-416f-ae5f-321635476822" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addMedicine TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="9ec85e01-c17d-4b6f-8db1-2d2b6c1ba133" name="addMedicine"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>PharmacyBinding</con:interface><con:operation>addMedicine</con:operation><con:request name="addMedicine" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="7e4d48af-b32b-4461-b9ec-f7ec6da42d20"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://lenovo-pc:8080/MedicineWebApplication/PharmacyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://www.ttu.ee/idu0075/2015/ws/invoice">\r
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:addMedicineRequest>
+         <inv:token>salajane</inv:token>
+         <inv:name>Betaloc Zok</inv:name>
+         <inv:activeIngridientList>
+            <inv:activeIngridient>
+               <inv:name>metoprolole</inv:name>
+               <inv:amount>23.5</inv:amount>
+               <inv:unit>mg</inv:unit>
+            </inv:activeIngridient>
+         </inv:activeIngridientList>
+         <inv:size>
+            <inv:amount>30</inv:amount>
+            <inv:unit>tbl</inv:unit>
+         </inv:size>
+         <inv:usage>hypertension</inv:usage>
+      </inv:addMedicineRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="6bf9e352-f39f-4e75-add1-2e4b9a1f0ed8" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="b55c8ab6-987a-4788-8746-c6c48d30032d" name="XPath Match"><con:configuration><path>declare namespace inv = 'http://www.ttu.ee/idu0075/2015/ws/invoice'
+//inv:name</path><content>Betaloc Zok</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/invoice/PharmacyPortType/addMedicineRequest"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="db2c4192-b047-451e-8567-0845a57c183f" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addPharmacy TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="f1cf26ac-0d7d-46b0-883c-eb89652aaf79" name="addPharmacy"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>PharmacyBinding</con:interface><con:operation>addPharmacy</con:operation><con:request name="addPharmacy" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="5a6c5732-a65e-4814-8aef-84700c02e86f"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://lenovo-pc:8080/MedicineWebApplication/PharmacyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://www.ttu.ee/idu0075/2015/ws/invoice">\r
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:addPharmacyRequest>
+         <inv:token>salajane</inv:token>
+         <inv:name>Tonismagi</inv:name>
+         <inv:address>
+            <inv:city>Tallinn</inv:city>
+            <inv:street>Tonismagi</inv:street>
+            <inv:house>5</inv:house>
+         </inv:address>
+         <inv:manager>
+            <inv:firstName>Mart</inv:firstName>
+            <inv:lastName>Mets</inv:lastName>
+         </inv:manager>
+         <inv:class>A</inv:class>
+      </inv:addPharmacyRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="07d09c2b-ac49-4387-bd36-e57c197a4f68" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="13aeb16d-fc75-4a0e-8634-0f5bb2f0a054" name="XPath Match"><con:configuration><path>declare namespace inv = "http://www.ttu.ee/idu0075/2015/ws/invoice"
+//inv:city</path><content>Tallinn</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/invoice/PharmacyPortType/addPharmacyRequest"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="930d0cc1-80be-41ee-9358-1d5115f1d0c6" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addPharmacyMedicine TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="5610fbe8-53cb-42c5-bb67-4d49028731ae" name="addPharmacyMedicine"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>PharmacyBinding</con:interface><con:operation>addPharmacyMedicine</con:operation><con:request name="addPharmacyMedicine" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="ee4cedd1-7ebf-42d3-87f6-455e22539cb0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://lenovo-pc:8080/MedicineWebApplication/PharmacyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://www.ttu.ee/idu0075/2015/ws/invoice">\r
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:addPharmacyMedicineRequest>
+         <inv:token>salajane</inv:token>
+         <inv:pharmacyId>1</inv:pharmacyId>
+         <inv:medicineId>1</inv:medicineId>
+         <inv:quantity>30</inv:quantity>
+         <inv:unitPrice>10</inv:unitPrice>
+      </inv:addPharmacyMedicineRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="185fca8b-d13e-4d4d-8728-aa5519b3ead6" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="b0f771f7-79f4-4012-895b-ea686cd91a8c" name="XPath Match"><con:configuration><path>declare namespace inv = 'http://www.ttu.ee/idu0075/2015/ws/invoice';
+//inv:activeIngridient/inv:unit</path><content>mg</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/invoice/PharmacyPortType/addPharmacyMedicineRequest"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="d8dadb55-6369-4257-bf8d-26dcf4fb1781" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getMedicineList TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="3c4b5791-5ae5-4d0e-97f7-db0e865851b4" name="getMedicineList"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>PharmacyBinding</con:interface><con:operation>getMedicineList</con:operation><con:request name="getMedicineList" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="7e38505c-f457-4b16-9aab-adbfa3643992"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://lenovo-pc:8080/MedicineWebApplication/PharmacyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://www.ttu.ee/idu0075/2015/ws/invoice">\r
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:getMedicineListRequest>
+         <inv:token>salajane</inv:token>
+      </inv:getMedicineListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="89a6277f-af01-4766-8df8-cc2413a008b6" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="1ea95e25-0aa7-42ac-bcaf-d8520a1e9ee5" name="XPath Match"><con:configuration><path>declare namespace inv = 'http://www.ttu.ee/idu0075/2015/ws/invoice';
+//inv:getMedicineListResponse/inv:medicine[1]/inv:usage</path><content>hypertension</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/invoice/PharmacyPortType/getMedicineListRequest"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="0e897e5e-72eb-4967-acc6-8593174ea743" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getMedicine TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="ae0235bf-7ad5-4fb7-9f9d-3605eb0c105e" name="getMedicine"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>PharmacyBinding</con:interface><con:operation>getMedicine</con:operation><con:request name="getMedicine" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c3213988-7c81-4970-957e-10fcf6b4142e"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://lenovo-pc:8080/MedicineWebApplication/PharmacyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://www.ttu.ee/idu0075/2015/ws/invoice">\r
+  <soapenv:Header/>
+   <soapenv:Body>
+      <inv:getMedicineRequest>
+         <inv:token>salajane</inv:token>
+         <inv:id>1</inv:id>
+      </inv:getMedicineRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="98b1a08c-c5cb-4b92-a6b3-e4a16b6a2fb0" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="41c58d9f-2244-49f6-b0d6-7851b8032dce" name="XPath Match"><con:configuration><path>declare namespace inv = 'http://www.ttu.ee/idu0075/2015/ws/invoice';
+//inv:size/inv:amount</path><content>30</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/invoice/PharmacyPortType/getMedicineRequest"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="abf4cfc0-417d-422d-bdf3-c55adbe0295b" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getPharmacy TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="771fd0a8-61a1-4ee5-9065-60a7429f8bde" name="getPharmacy"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>PharmacyBinding</con:interface><con:operation>getPharmacy</con:operation><con:request name="getPharmacy" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="e6b3c59d-a884-49b0-a674-c3c7731c8e48"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://lenovo-pc:8080/MedicineWebApplication/PharmacyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://www.ttu.ee/idu0075/2015/ws/invoice">\r
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:getPharmacyRequest>
+         <inv:token>salajane</inv:token>
+         <inv:id>1</inv:id>
+      </inv:getPharmacyRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="5c7ed7dc-4312-415e-9f70-ab5640a2e80d" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="c0e7d475-288f-45bb-b25e-91c034a4a6bf" name="XPath Match"><con:configuration><path>declare namespace inv = "http://www.ttu.ee/idu0075/2015/ws/invoice"
+//inv:city</path><content>Tallinn</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/invoice/PharmacyPortType/getPharmacyRequest"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="c8a15354-8e85-4049-a8c4-de1fe0a3f13a" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getPharmacyList TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="fc030224-c774-4a7a-9565-42fdab2d50a7" name="getPharmacyList"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>PharmacyBinding</con:interface><con:operation>getPharmacyList</con:operation><con:request name="getPharmacyList" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="97fa0111-95b2-4343-8542-b4e537ca6cae"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://lenovo-pc:8080/MedicineWebApplication/PharmacyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://www.ttu.ee/idu0075/2015/ws/invoice">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <inv:getPharmacyListRequest>\r
+         <inv:token>salajane</inv:token>\r
+         <!--Optional:-->\r
+         <inv:city>Tallinn</inv:city>\r
+         <!--Optional:-->\r
+         <inv:managerLastName>Mets</inv:managerLastName>\r
+         <!--Optional:-->\r
+         <inv:class>A</inv:class>\r
+      </inv:getPharmacyListRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="78a12b04-ef7b-422e-9f33-81d0fe1602b8" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="ab4f697c-3d38-4604-82b0-2b02acb61adc" name="XPath Match"><con:configuration><path>declare namespace inv = 'http://www.ttu.ee/idu0075/2015/ws/invoice';
+count(//inv:pharmacy)</path><content>1</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/invoice/PharmacyPortType/getPharmacyListRequest"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="15e2fa19-2109-4ef3-ae69-10d36398747e" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getPharmacyMedicineList TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="75421bc6-bd78-4858-a74d-12c49acd2fa5" name="getPharmacyMedicineList"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>PharmacyBinding</con:interface><con:operation>getPharmacyMedicineList</con:operation><con:request name="getPharmacyMedicineList" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="3c173b19-1987-4647-8960-1aef7869aa02"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://lenovo-pc:8080/MedicineWebApplication/PharmacyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://www.ttu.ee/idu0075/2015/ws/invoice">\r
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:getPharmacyMedicineListRequest>
+         <inv:token>salajane</inv:token>
+         <inv:pharmacyId>1</inv:pharmacyId>
+      </inv:getPharmacyMedicineListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="a6c1eb09-1bc3-4840-87cb-b0c3303da081" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="cce7204d-40c1-411b-baa0-38e7c5e1c1f1" name="XPath Match"><con:configuration><path>declare namespace inv = 'http://www.ttu.ee/idu0075/2015/ws/invoice';
+//inv:pharmacyMedicine[1]/inv:quantity</path><content>30</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="d0b07a36-facb-4aa7-b990-53a8d1655b99" name="XPath Match 1"><con:configuration><path>declare namespace inv = 'http://www.ttu.ee/idu0075/2015/ws/invoice';
+count(//inv:pharmacyMedicine)</path><content>1</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/invoice/PharmacyPortType/getPharmacyMedicineListRequest"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
